@@ -33,40 +33,44 @@ public class Main {
      */
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        int N = Integer.parseInt(br.readLine());
-        List<Integer> list1 = new ArrayList<>();
-        List<Integer> list2 = new ArrayList<>();
         StringTokenizer st;
+
+        int N = Integer.parseInt(br.readLine());
+        int[] arr1 = new int[N];
         st = new StringTokenizer(br.readLine());
         for (int i = 0; i < N; i++) {
-            list1.add(Integer.parseInt(st.nextToken()));
+            arr1[i] = Integer.parseInt(st.nextToken());
         }
 
         int M = Integer.parseInt(br.readLine());
+        int[] arr2 = new int[M];
         st = new StringTokenizer(br.readLine());
         for (int i = 0; i < M; i++) {
-            list2.add(Integer.parseInt(st.nextToken()));
+            arr2[i] = Integer.parseInt(st.nextToken());
         }
 
-        System.out.println(solution(list1, list2));
+        for (int i : (solution(N, arr1, M, arr2))) {
+            System.out.print(i + " ");
+        }
 
     }
 
-    private static String solution(List<Integer> list1, List<Integer> list2) {
-        String answer = "";
-        List<Integer> sumList = new ArrayList<>();
+    private static List<Integer> solution(int N, int[] arr1, int M, int[] arr2) {
+        List<Integer> answer = new ArrayList<>();
+        int p1 = 0;
+        int p2 = 0;
 
-        for (Integer i : list1) {
-            sumList.add(i);
+        while (p1 < N && p2 < M) {
+            if (arr1[p1] < arr2[p2]) answer.add(arr1[p1++]);
+            else answer.add(arr2[p2++]);
         }
-        for (Integer i : list2) {
-            sumList.add(i);
+        while (p1 < N) {
+            answer.add(arr1[p1++]);
         }
-        Collections.sort(sumList);
+        while (p2 < M) {
+            answer.add(arr2[p2++]);
+        }
 
-        for (Integer i : sumList) {
-            answer += i + " ";
-        }
         return answer;
     }
 }
